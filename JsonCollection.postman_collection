@@ -1,0 +1,577 @@
+{
+	"info": {
+		"_postman_id": "e5ceb156-1560-475b-a3b6-f90c16af36ec",
+		"name": "Json Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16379340"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"var userid=pm.variables.replaceIn('{{$randomInt}}');\r",
+							"var username=pm.variables.replaceIn('{{$randomUserName}}');\r",
+							"var firstname=pm.variables.replaceIn('{{$randomFirstName}}');\r",
+							"var lastname=pm.variables.replaceIn('{{$randomLastName}}');\r",
+							"var email=pm.variables.replaceIn('{{$randomEmail}}');\r",
+							"const email_address=email.toLowerCase();\r",
+							"var password=pm.variables.replaceIn('{{$randomPassword}}');\r",
+							"var phonenumber=pm.variables.replaceIn('{{$randomPhoneNumber}}');\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"userid\",userid);\r",
+							"pm.environment.set(\"username\",username);\r",
+							"pm.environment.set(\"firstName\",firstname);\r",
+							"pm.environment.set(\"lastName\",lastname);\r",
+							"pm.environment.set(\"email\",email_address);\r",
+							"pm.environment.set(\"password\",password);\r",
+							"pm.environment.set(\"phonenumber\",phonenumber);\r",
+							"pm.environment.set(\"userstatus\",0);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the staus code\",()=>\r",
+							"{    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate te status messgae\",()=>\r",
+							"{    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const jsonData=pm.response.json();\r",
+							"\r",
+							"pm.test(\"Set the msg value \",()=>\r",
+							"{   pm.environment.set(\"message\",jsonData.message);\r",
+							"    console.log(jsonData.message);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate the msg value is equal to userid \",()=>\r",
+							"{   pm.environment.set(\"message\",jsonData.message);\r",
+							"    pm.environment.get(\"userid\")\r",
+							"    pm.expect(jsonData.message).to.eql(pm.environment.get(\"userid\"));\r",
+							"    console.log(jsonData.message);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{userid}}\",\r\n  \"username\": \"{{username}}\",\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"phone\": \"{{phonenumber}}\",\r\n  \"userStatus\": \"{{userstatus}}\"\r\n}\r\n\r\n\r\n"
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://petstore.swagger.io/v2/user",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"{{userid}}\",\r\n  \"username\": \"{{username}}\",\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"phone\": \"{{phonenumber}}\",\r\n  \"userStatus\": \"{{userstatus}}\"\r\n}\r\n\r\n\r\n"
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 15 Aug 2023 06:45:47 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, DELETE, PUT"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Content-Type, api_key, Authorization"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(9.2.9.v20150224)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"type\": \"unknown\",\n    \"message\": \"103\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate te status messgae\",()=>\r",
+							"{    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const jsonDate=pm.response.json();\r",
+							"\r",
+							"pm.test(\"Validate te id\",()=>\r",
+							"{   \r",
+							" pm.expect(jsonDate.id).to.eq(parseInt(pm.environment.get(\"userid\")));\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://petstore.swagger.io/v2/user/Addie62",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"{{username}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 15 Aug 2023 06:45:53 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, DELETE, PUT"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Content-Type, api_key, Authorization"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(9.2.9.v20150224)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 103,\n    \"username\": \"Michale78\",\n    \"firstName\": \"Glenda\",\n    \"lastName\": \"Weber\",\n    \"email\": \"lester_champlin@yahoo.com\",\n    \"password\": \"USd6Po464VsnVSN\",\n    \"phone\": \"269-666-3027\",\n    \"userStatus\": 0\n}"
+				}
+			]
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var Updated_firstname=pm.variables.replaceIn('{{$randomFirstName}}');\r",
+							"var Updated_phonenumber=pm.variables.replaceIn('{{$randomPhoneNumber}}');\r",
+							"\r",
+							"pm.environment.set(\"firstName\",Updated_firstname);\r",
+							"pm.environment.set(\"phonenumber\",Updated_phonenumber);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate te status messgae\",()=>\r",
+							"{    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const jsonDate=pm.response.json();\r",
+							"\r",
+							"pm.test(\"Validate the id\",()=>\r",
+							"{   \r",
+							" pm.expect(jsonDate.message).to.eq(pm.environment.get(\"userid\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{userid}}\",\r\n  \"username\": \"{{username}}\",\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"phone\": \"{{phonenumber}}\",\r\n  \"userStatus\": \"{{userstatus}}\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://petstore.swagger.io/v2/user/{{firstName}}",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"{{userid}}\",\r\n  \"username\": \"{{username}}\",\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"phone\": \"{{phonenumber}}\",\r\n  \"userStatus\": \"{{userstatus}}\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"{{username}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 15 Aug 2023 06:45:57 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, DELETE, PUT"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Content-Type, api_key, Authorization"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(9.2.9.v20150224)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"type\": \"unknown\",\n    \"message\": \"103\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate te status messgae\",()=>\r",
+							"{    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const jsonDate=pm.response.json();\r",
+							"\r",
+							"pm.test(\"Validate user in response\",()=>\r",
+							"{   \r",
+							" pm.expect(jsonDate.message).to.eq(pm.environment.get(\"username\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"//Unsetting all the value\r",
+							"pm.environment.unset(\"userid\");\r",
+							"pm.environment.unset(\"username\");\r",
+							"pm.environment.unset(\"firstName\");\r",
+							"pm.environment.unset(\"lastName\");\r",
+							"pm.environment.unset(\"email\");\r",
+							"pm.environment.unset(\"password\");\r",
+							"pm.environment.unset(\"phonenumber\");\r",
+							"pm.environment.unset(\"message\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://petstore.swagger.io/v2/user/Roscoe_Murphy",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"{{username}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 15 Aug 2023 06:46:03 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, DELETE, PUT"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Content-Type, api_key, Authorization"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(9.2.9.v20150224)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"type\": \"unknown\",\n    \"message\": \"Michale78\"\n}"
+				}
+			]
+		}
+	]
+}
